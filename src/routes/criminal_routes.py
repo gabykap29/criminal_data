@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from src.controllers.criminal_controllers import *
-from httpx import Response
 from fastapi.responses import JSONResponse
 
 
@@ -9,6 +8,10 @@ criminal_routes = APIRouter()
 @criminal_routes.get('/', tags=['criminal'])
 async def prueba_server():
     return 'Servidor funcionando!'
+
+@criminal_routes.get('/', tags=['prueba'])
+async def prueba():
+    return 'server online'
 
 @criminal_routes.get('/criminals/{length}/{skip}', tags=['criminal'])
 async def get_all_criminals(length: int, skip: int):

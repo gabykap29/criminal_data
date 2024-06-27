@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.routes.criminal_routes import criminal_routes
 
 # instancio desde la clase FastApi
-app = FastAPI()
+app = FastAPI(swagger_ui_parameters={"syntaxHighlight": True})
 
 origins = [
     "*"
