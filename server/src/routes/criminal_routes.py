@@ -9,10 +9,7 @@ criminal_routes = APIRouter()
 async def prueba_server():
     return 'Servidor funcionando!'
 
-@criminal_routes.get('/', tags=['prueba'])
-async def prueba():
-    return 'server online'
-
+#Obtener todos los criminales
 @criminal_routes.get('/criminals/{length}/{skip}', tags=['criminal'])
 async def get_all_criminals(length: int, skip: int):
     criminals = await get_criminal_document(length, skip)
@@ -22,7 +19,7 @@ async def get_all_criminals(length: int, skip: int):
     else:
         response = JSONResponse(content='No se encontraron delincuentes', status_code=404)
         return response
-
+#Obtener un criminal
 @criminal_routes.get('/criminals/{criminal_id}', tags=['criminal'])
 async def get_criminal_by_id(criminal_id):
     criminal_id = str(criminal_id)
@@ -33,7 +30,7 @@ async def get_criminal_by_id(criminal_id):
     else:
         response = JSONResponse(content='No se encontró el delincuente', status_code=404)
         return response
-
+#Cargar un criminal
 @criminal_routes.post('/criminals', tags=['criminal'])
 async def insert_criminal(criminal_data: dict):
     criminal = await insert_criminal_document(criminal_data)
@@ -43,7 +40,7 @@ async def insert_criminal(criminal_data: dict):
     else:
         response = JSONResponse(content='No se pudo agregar el delincuente', status_code=404)
         return response
-
+#Buscar criminales por nombre, apaellido
 @criminal_routes.get('/criminals/name/{name}/{lastname}/{skip}/{length}', tags=['criminal'])
 async def get_criminal_by_name(name: str, lastname: str, skip: int, length: int):
     criminal = await get_criminal_document_by_name(name, lastname, skip, length)
@@ -54,6 +51,7 @@ async def get_criminal_by_name(name: str, lastname: str, skip: int, length: int)
         response = JSONResponse(content='No se encontró el delincuente', status_code=404)
         return response
     
+#Obtener un crminal por dni
 @criminal_routes.get('/criminals/dni/{dni}', tags=['criminal'])
 async def get_criminal_by_dni(dni):
     dni = str(dni)
@@ -64,7 +62,7 @@ async def get_criminal_by_dni(dni):
     else:
         response = JSONResponse(content='No se encontró el delincuente', status_code=404)
         return response
-    
+#Editar un criminal o actualizar información
 @criminal_routes.put('/criminals/{criminal_id}', tags=['criminal'])
 async def update_criminal(criminal_id: str, criminal_data: dict):
     criminal = update_criminal_document(criminal_id, criminal_data)
@@ -74,7 +72,8 @@ async def update_criminal(criminal_id: str, criminal_data: dict):
     else:
         response = JSONResponse(content='No se pudo actualizar el delincuente', status_code=404)
         return response
-    
+
+#Eliminado logico de un criminal 
 @criminal_routes.put('/criminals/delete/{criminal_id}', tags=['criminal'])
 async def delete_criminal(criminal_id: str):
     criminal =  await delete_criminal_document(criminal_id)
@@ -84,7 +83,7 @@ async def delete_criminal(criminal_id: str):
     else:
         response = JSONResponse(content='No se pudo eliminar el delincuente', status_code=404)
         return response
-    
+#agregar fotos de criminales
 @criminal_routes.put('/criminal/images/{criminal_id}', tags=['criminal'])
 async def add_imagel(criminal_id: str, image: str):
     criminal = add_image_to_criminal(criminal_id, image)
